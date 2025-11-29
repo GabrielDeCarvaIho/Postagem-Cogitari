@@ -30,6 +30,7 @@
                         'blob': 'blob 10s infinite',
                         'fade-in': 'fadeIn 0.5s ease-out',
                         'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-short': 'pulseShort 0.2s ease-in-out',
                     },
                     keyframes: {
                         blob: {
@@ -45,6 +46,11 @@
                         slideDown: {
                             '0%': { opacity: '0', transform: 'translateY(-10px)', maxHeight: '0' },
                             '100%': { opacity: '1', transform: 'translateY(0)', maxHeight: '500px' },
+                        },
+                        pulseShort: {
+                            '0%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(0.95)' },
+                            '100%': { transform: 'scale(1)' },
                         }
                     }
                 }
@@ -110,6 +116,11 @@
         .ad-space:hover {
             border-color: rgba(47, 128, 237, 0.3);
             background-color: rgba(255,255,255,0.03);
+        }
+
+        /* Classe para animação de clique */
+        .click-pulse {
+            animation: pulseShort 0.2s ease-in-out;
         }
 
         /* Responsividade na Tipografia */
@@ -445,10 +456,11 @@
                         <div class="flex gap-3 md:gap-4">
                             <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ana" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 bg-midnight shrink-0">
                             <div class="flex-1">
+                                <!-- Comment Body -->
                                 <div class="bg-white/5 rounded-2xl p-4 md:p-6 rounded-tl-none border border-white/5 hover:border-white/10 transition-colors">
                                     <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                                         <div class="flex items-center gap-2 mb-1 md:mb-0">
-                                            <span class="text-white font-bold text-sm">Ana Clara</span>
+                                            <span class="text-white font-bold text-sm author-name">Ana Clara</span>
                                             <span class="text-gray-600 text-xs">• Há 2 horas</span>
                                         </div>
                                         <div class="flex text-yellow-400 gap-0.5">
@@ -475,7 +487,38 @@
                                         Responder
                                     </button>
                                 </div>
-                                <div class="replies-wrapper mt-4"></div>
+                                
+                                <div class="replies-wrapper mt-4">
+                                    <!-- Resposta Aninhada 1 (Exemplo Estático) -->
+                                    <div class="ml-4 md:ml-6 pl-4 border-l border-white/10 animate-fade-in">
+                                        <div class="flex gap-3">
+                                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-electricBlue bg-midnight shrink-0">
+                                            <div class="flex-1">
+                                                <div class="bg-electricBlue/10 border border-electricBlue/20 rounded-2xl p-3 md:p-4 rounded-tl-none">
+                                                    <div class="flex items-center gap-2 mb-1">
+                                                        <span class="text-electricBlue font-bold text-xs author-name">Lucas Mendes (Autor)</span>
+                                                        <span class="text-electricBlue/50 text-[10px]">• Há 30 min</span>
+                                                    </div>
+                                                    <p class="text-coolgrey text-xs md:text-sm">Concordo, João! O branding será o "critério de desempate" dos algoritmos.</p>
+                                                </div>
+                                                <!-- Botões dentro da resposta -->
+                                                <div class="flex gap-4 mt-2 ml-2">
+                                                    <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                                        <span>5</span>
+                                                    </button>
+                                                    <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-danger transition-colors" onclick="toggleDislike(this)">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                                    </button>
+                                                    <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-electricBlue transition-colors" onclick="toggleReplyForm(this)">
+                                                        Responder
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -488,14 +531,14 @@
                                 <div class="bg-white/5 rounded-2xl p-4 md:p-6 rounded-tl-none border border-white/5 hover:border-white/10 transition-colors">
                                     <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                                         <div class="flex items-center gap-2 mb-1 md:mb-0">
-                                            <span class="text-white font-bold text-sm">João Pedro</span>
+                                            <span class="text-white font-bold text-sm author-name">João Pedro</span>
                                             <span class="text-gray-600 text-xs">• Há 45 min</span>
                                         </div>
                                         <div class="flex text-yellow-400 gap-0.5">
                                             <!-- Estrelas -->
                                             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3.5 h-3.5 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                             <svg class="w-3.5 h-3.5 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                             <svg class="w-3.5 h-3.5 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                         </div>
@@ -517,17 +560,30 @@
                                 </div>
 
                                 <div class="replies-wrapper mt-4">
-                                    <!-- Resposta Aninhada Existente -->
+                                    <!-- Resposta Aninhada 1 -->
                                     <div class="ml-4 md:ml-6 pl-4 border-l border-white/10 animate-fade-in">
                                         <div class="flex gap-3">
                                             <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-electricBlue bg-midnight shrink-0">
                                             <div class="flex-1">
                                                 <div class="bg-electricBlue/10 border border-electricBlue/20 rounded-2xl p-3 md:p-4 rounded-tl-none">
                                                     <div class="flex items-center gap-2 mb-1">
-                                                        <span class="text-electricBlue font-bold text-xs">Lucas Mendes (Autor)</span>
+                                                        <span class="text-electricBlue font-bold text-xs author-name">Lucas Mendes (Autor)</span>
                                                         <span class="text-electricBlue/50 text-[10px]">• Há 30 min</span>
                                                     </div>
                                                     <p class="text-coolgrey text-xs md:text-sm">Concordo, João! O branding será o "critério de desempate" dos algoritmos.</p>
+                                                </div>
+                                                <!-- Botões de Ação na Resposta -->
+                                                <div class="flex gap-4 mt-2 ml-2">
+                                                    <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                                        <span>2</span>
+                                                    </button>
+                                                    <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-danger transition-colors" onclick="toggleDislike(this)">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                                    </button>
+                                                    <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-electricBlue transition-colors" onclick="toggleReplyForm(this)">
+                                                        Responder
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -575,6 +631,20 @@
 
     <!-- SCRIPT DE INTERATIVIDADE -->
     <script>
+        // --- GLOBAL CLICK ANIMATION ---
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('button');
+            if (btn) {
+                // Remove class first to allow re-trigger
+                btn.classList.remove('click-pulse');
+                void btn.offsetWidth; // trigger reflow
+                btn.classList.add('click-pulse');
+                setTimeout(() => {
+                    btn.classList.remove('click-pulse');
+                }, 200);
+            }
+        });
+
         // --- AUTH & AVATAR CONSISTENCY ---
         let isLoggedIn = false;
         // Generate ONE consistent avatar for the session
@@ -591,9 +661,9 @@
             if (isLoggedIn) {
                 loginBtn.innerText = "Sair";
                 userProfile.classList.remove('hidden');
-                headerAvatar.src = currentUserAvatarUrl; // Set consistent avatar in header
-                loginBtn.classList.add('hidden'); // Hide login btn
-                loginBtn.classList.remove('hidden'); // Keep visible for demo toggle
+                headerAvatar.src = currentUserAvatarUrl;
+                loginBtn.classList.add('hidden');
+                loginBtn.classList.remove('hidden'); 
                 
                 currentUserDisplay.innerText = "Usuário Verificado";
                 currentUserDisplay.classList.add('text-electricBlue');
@@ -675,11 +745,9 @@
             let starsHtml = '';
             for(let i=1; i<=5; i++) {
                 let colorClass = i <= selectedRating ? 'text-yellow-400' : 'text-gray-600';
-                // Usando classes responsivas para tamanho do ícone SVG
                 starsHtml += `<svg class="w-3.5 h-3.5 ${colorClass}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
             }
 
-            // Using currentUserAvatarUrl here instead of random Math.random()
             newComment.innerHTML = `
                 <div class="flex gap-3 md:gap-4">
                     <img src="${currentUserAvatarUrl}" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 bg-midnight shrink-0">
@@ -687,7 +755,7 @@
                         <div class="bg-white/5 rounded-2xl p-4 md:p-6 rounded-tl-none border border-white/5">
                             <div class="flex justify-between items-start mb-2">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-white font-bold text-sm">Usuário Verificado</span>
+                                    <span class="text-white font-bold text-sm author-name">Usuário Verificado</span>
                                     <span class="text-gray-600 text-xs">• Agora mesmo</span>
                                 </div>
                                 <div class="flex">${starsHtml}</div>
@@ -773,16 +841,29 @@
             // Encontra o container flex-1
             const commentBody = btn.closest('.flex-1');
             
+            // Tenta achar o nome do autor do comentário para menção @
+            // Pode ser o autor do comentário principal OU o autor da resposta onde cliquei
+            const authorElement = commentBody.querySelector('.author-name');
+            let mentionText = '';
+            if(authorElement) {
+                mentionText = '@' + authorElement.innerText + ' ';
+            }
+
             // Verifica se já existe um formulário de resposta
             let existingForm = commentBody.querySelector('.reply-form-container');
 
             if (existingForm) {
                 if (existingForm.classList.contains('hidden')) {
                     existingForm.classList.remove('hidden');
+                    const textarea = existingForm.querySelector('textarea');
+                    // Só preenche se estiver vazio ou não tiver o nome certo
+                    if(!textarea.value.includes(mentionText.trim())) {
+                        textarea.value = mentionText;
+                    }
                     setTimeout(() => {
                         existingForm.style.maxHeight = '200px';
                         existingForm.style.opacity = '1';
-                        existingForm.querySelector('textarea').focus();
+                        textarea.focus();
                     }, 10);
                 } else {
                     existingForm.style.maxHeight = '0';
@@ -792,17 +873,19 @@
                     }, 300);
                 }
             } else {
-                // Cria novo form
+                // Cria novo form, note o 'onclick="postReply(this)"'
+                // ESTRUTURA PARA RESPOSTA
                 const replyHtml = `
                     <div class="reply-form-container mt-4 ml-2 border-l border-white/10 pl-4 hidden" style="max-height: 0; opacity: 0;">
-                        <textarea rows="2" class="w-full bg-midnight/50 border border-white/10 rounded-lg p-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-electricBlue transition-colors resize-none" placeholder="Escreva sua resposta..."></textarea>
+                        <textarea rows="2" class="w-full bg-midnight/50 border border-white/10 rounded-lg p-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-electricBlue transition-colors resize-none" placeholder="Escreva sua resposta...">${mentionText}</textarea>
                         <div class="flex justify-end mt-2 gap-2">
-                             <button class="text-xs text-gray-500 hover:text-white px-3 py-1" onclick="toggleReplyForm(this.parentElement.parentElement.parentElement.parentElement.querySelector('button:nth-child(3)'))">Cancelar</button>
+                             <button class="text-xs text-gray-500 hover:text-white px-3 py-1" onclick="toggleReplyForm(this.parentElement.parentElement.previousElementSibling.lastElementChild)">Cancelar</button>
                              <button onclick="postReply(this)" class="bg-electricBlue/20 hover:bg-electricBlue/40 text-electricBlue text-xs px-4 py-1.5 rounded-full font-medium transition-colors">Responder</button>
                         </div>
                     </div>
                 `;
-                // Insere logo após os botões de ação
+                // Insere logo após os botões de ação (que é onde o btn está, geralmente)
+                // Se btn estiver dentro de uma div de botoes, insert after that div
                 const actionButtonsDiv = btn.parentElement;
                 actionButtonsDiv.insertAdjacentHTML('afterend', replyHtml);
                 
@@ -812,7 +895,10 @@
                 setTimeout(() => {
                     newForm.style.maxHeight = '200px';
                     newForm.style.opacity = '1';
-                    newForm.querySelector('textarea').focus();
+                    const textarea = newForm.querySelector('textarea');
+                    textarea.focus();
+                    // Move cursor to end
+                    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
                 }, 10);
             }
         }
@@ -825,10 +911,14 @@
             
             if (text === "") return;
 
-            // Encontra o wrapper de respostas (dentro do comment body)
-            const commentBody = formContainer.parentElement; // flex-1
-            const repliesWrapper = commentBody.querySelector('.replies-wrapper');
-
+            // Logica para encontrar onde inserir a resposta:
+            // 1. Tenta achar 'replies-wrapper' dentro do flex-1 atual (se for um comentario raiz)
+            // 2. Se não achar, significa que estamos dentro de uma resposta. Devemos subir até achar o comentario raiz e seu replies-wrapper? 
+            // OU simplesmente inserir logo abaixo visualmente (indentado)
+            
+            // Para manter simples e funcional (Reddit style infinite nesting visual):
+            // Vamos inserir APÓS o form container, simulando uma nova thread aninhada.
+            
             // Cria HTML da resposta usando currentUserAvatarUrl
             const replyHtml = `
                 <div class="ml-4 md:ml-6 pl-4 border-l border-white/10 animate-fade-in mt-4">
@@ -837,17 +927,32 @@
                         <div class="flex-1">
                             <div class="bg-white/5 rounded-2xl p-3 md:p-4 rounded-tl-none border border-white/5">
                                 <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-white font-bold text-xs">Usuário Verificado</span>
+                                    <span class="text-white font-bold text-xs author-name">Usuário Verificado</span>
                                     <span class="text-gray-500 text-[10px]">• Agora mesmo</span>
                                 </div>
                                 <p class="text-coolgrey text-xs md:text-sm">${text}</p>
+                            </div>
+                            
+                            <!-- Ações na nova resposta gerada -->
+                            <div class="flex gap-4 mt-2 ml-2">
+                                <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                    <span>0</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-danger transition-colors" onclick="toggleDislike(this)">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                </button>
+                                <button class="flex items-center gap-1 text-[10px] font-medium text-gray-500 hover:text-electricBlue transition-colors" onclick="toggleReplyForm(this)">
+                                    Responder
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
 
-            repliesWrapper.insertAdjacentHTML('beforeend', replyHtml);
+            // Insere DEPOIS do container do formulário para aparecer logo abaixo dele
+            formContainer.insertAdjacentHTML('afterend', replyHtml);
             
             // Fecha e limpa o form
             textarea.value = '';

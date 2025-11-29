@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COGITARI - O Futuro dos Agentes Autônomos na Publicidade</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fontes Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: '#020511',
+                        navy: '#050A25',
+                        coolgrey: '#E2E8F0',
+                        electricBlue: '#2F80ED',
+                        vividPurple: '#7B42F6',
+                        success: '#10B981',
+                        danger: '#EF4444',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Estilos Customizados para Glassmorphism Otimizado para Leitura */
+        .glass-header {
+            background: rgba(2, 5, 17, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Container do Artigo: Mais opaco para leitura confortável */
+        .glass-article {
+            background: rgba(5, 10, 37, 0.85); /* 85% opacidade para bloquear o fundo */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #2F80ED 0%, #7B42F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-border-bottom {
+            border-bottom: 2px solid;
+            border-image: linear-gradient(90deg, #2F80ED, #7B42F6) 1;
+        }
+
+        /* Espaço para Anúncios (Placeholder) */
+        .ad-space {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.02),
+                rgba(255,255,255,0.02) 10px,
+                rgba(255,255,255,0.04) 10px,
+                rgba(255,255,255,0.04) 20px
+            );
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Tipografia do Artigo */
+        .article-content h2 {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-content p {
+            color: #E2E8F0;
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .article-content blockquote {
+            border-left: 4px solid #7B42F6;
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: #94A3B8;
+            margin: 2rem 0;
+            background: rgba(255,255,255,0.02);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .article-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #E2E8F0;
+        }
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-midnight text-coolgrey font-sans overflow-x-hidden min-h-screen relative selection:bg-electricBlue selection:text-white">
+
+    <!-- BACKGROUND ORBS (Luzes de Fundo - Mantidas para identidade, mas artigo cobrirá a maioria) -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-electricBlue rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-1/2 right-1/4 w-96 h-96 bg-vividPurple rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <!-- HEADER (Sticky & Glass) -->
+    <nav class="fixed w-full z-50 glass-header top-0 left-0 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-8">
+                    <a href="index.html" class="flex-shrink-0">
+                        <span class="text-2xl font-bold tracking-wider gradient-text cursor-pointer hover:opacity-80 transition-opacity">COGITARI</span>
+                    </a>
+                    <!-- Breadcrumbs Desktop -->
+                    <div class="hidden md:flex items-center text-sm text-gray-500 space-x-2">
+                        <span class="text-gray-600">/</span>
+                        <a href="#" class="hover:text-white transition-colors">Notícias</a>
+                        <span class="text-gray-600">/</span>
+                        <a href="#" class="hover:text-white transition-colors">Automação</a>
+                        <span class="text-gray-600">/</span>
+                        <span class="text-electricBlue truncate max-w-[200px]">Agentes Autônomos</span>
+                    </div>
+                </div>
+                
+                <!-- Botão Voltar -->
+                <div>
+                    <a href="#" onclick="history.back()" class="flex items-center gap-2 text-sm font-medium text-coolgrey hover:text-white transition-colors border border-white/10 hover:border-white/30 px-4 py-2 rounded-full glass-card-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                        Voltar para Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="relative z-10 pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        
+        <!-- AD SPACE (TOPO - BANNER LARGO) -->
+        <div class="ad-space w-full h-24 rounded-lg mb-8">
+            Espaço Publicitário (728x90)
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- COLUNA DO ARTIGO (Esquerda/Centro - 8 Colunas) -->
+            <article class="lg:col-span-8">
+                
+                <!-- Card Principal do Artigo -->
+                <div class="glass-article rounded-2xl p-6 md:p-10 lg:p-12 overflow-hidden relative">
+                    
+                    <!-- Meta Header -->
+                    <div class="flex flex-wrap items-center gap-4 mb-6 text-sm">
+                        <span class="bg-electricBlue/20 text-electricBlue border border-electricBlue/30 px-3 py-1 rounded-full font-medium">#InteligênciaArtificial</span>
+                        <span class="bg-vividPurple/20 text-vividPurple border border-vividPurple/30 px-3 py-1 rounded-full font-medium">#Marketing</span>
+                        <span class="text-gray-400 flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            29 Nov, 2025 • 14:30
+                        </span>
+                        <span class="text-gray-400 flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M2 12h20M2 12a10 10 0 0 1 12-10 10 10 0 0 1 8 10M2 12a10 10 0 0 0 12 10 10 10 0 0 0 8-10"/></svg>
+                            5 min de leitura
+                        </span>
+                    </div>
+
+                    <!-- Título H1 -->
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                        O Fim do "Click": Como Agentes Autônomos estão reescrevendo o Marketing Digital
+                    </h1>
+
+                    <!-- Autor -->
+                    <div class="flex items-center gap-4 mb-8 border-b border-white/5 pb-8">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Autor" class="w-12 h-12 rounded-full border-2 border-electricBlue">
+                        <div>
+                            <p class="text-white font-semibold">Lucas Mendes</p>
+                            <p class="text-coolgrey/60 text-sm">Editor Chefe • Especialista em IA</p>
+                        </div>
+                        <button class="ml-auto text-sm text-electricBlue hover:text-white transition-colors border border-electricBlue/30 hover:bg-electricBlue/20 px-4 py-1.5 rounded-md">
+                            + Seguir
+                        </button>
+                    </div>
+
+                    <!-- Imagem de Destaque -->
+                    <div class="relative w-full h-[400px] mb-10 rounded-xl overflow-hidden group">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2000&auto=format&fit=crop" 
+                             alt="Agentes de IA" 
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
+                        <p class="absolute bottom-4 left-4 text-xs text-gray-400">Imagem: Unsplash / DeepMind Visualization</p>
+                    </div>
+
+                    <!-- Conteúdo do Texto -->
+                    <div class="article-content text-coolgrey">
+                        <p class="first-letter:text-5xl first-letter:font-bold first-letter:text-electricBlue first-letter:float-left first-letter:mr-3 first-letter:mt-[-10px]">
+                            A era do usuário navegando manualmente por dezenas de sites está chegando ao fim. Com a ascensão dos Agentes Autônomos de IA (AutoGPT, BabyAGI), o marketing digital enfrenta sua maior revolução desde o surgimento do SEO.
+                        </p>
+                        
+                        <p>
+                            Imagine um cenário onde seu cliente não pesquisa "melhor tênis de corrida" no Google. Em vez disso, ele diz ao seu assistente pessoal: "Compre o melhor tênis para minha pisada pronada, até R$ 800". O agente navega, compara, lê reviews e executa a compra. Onde fica o seu anúncio de display nesse processo?
+                        </p>
+
+                        <h2>A Morte do Funil Tradicional</h2>
+                        <p>
+                            O funil de vendas (Consciência > Consideração > Decisão) está sendo compactado em milissegundos. Agentes de IA não "consideram" marcas baseados em emoção visual da mesma forma que humanos. Eles analisam dados brutos, especificações técnicas e prova social agregada.
+                        </p>
+
+                        <!-- AD SPACE (IN-ARTICLE) -->
+                        <div class="my-8">
+                            <div class="ad-space w-full h-64 rounded-lg">
+                                Anúncio In-Article (Conteúdo Relacionado)
+                            </div>
+                            <p class="text-xs text-center text-gray-600 mt-2">Publicidade</p>
+                        </div>
+
+                        <blockquote>
+                            "Se o seu site não for legível por máquinas (Machine Readable), você será invisível na próxima década." — Relatório COGITARI Q3 2025.
+                        </blockquote>
+
+                        <h2>Adaptação ou Obsolescência</h2>
+                        <p>Para sobreviver, as marcas precisam focar em três pilares:</p>
+                        <ul>
+                            <li><strong>Dados Estruturados (Schema Markup):</strong> Facilite o entendimento do seu produto pelos robôs.</li>
+                            <li><strong>API First:</strong> Ofereça interfaces para que IAs possam consultar seu estoque em tempo real.</li>
+                            <li><strong>Reputação Verificável:</strong> Reviews falsos serão filtrados por algoritmos avançados. A autenticidade vale ouro.</li>
+                        </ul>
+
+                        <p>
+                            O futuro não é sobre convencer humanos a clicar, mas convencer algoritmos de que você é a melhor resposta lógica.
+                        </p>
+                    </div>
+
+                    <!-- Rodapé do Artigo: Tags e Fontes -->
+                    <div class="mt-12 pt-8 border-t border-white/5">
+                        <h3 class="text-white text-sm font-semibold mb-4 uppercase tracking-wider">Fontes & Referências</h3>
+                        <ul class="text-sm text-gray-500 space-y-2 mb-8">
+                            <li>1. OpenAI Research Paper: "Language Models as Agents" (2024)</li>
+                            <li>2. MIT Tech Review: "The Autonomous Economy"</li>
+                            <li>3. Dados internos da COGITARI Analytics.</li>
+                        </ul>
+
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="text-xs font-mono text-electricBlue border border-electricBlue/20 px-2 py-1 rounded bg-electricBlue/5">TECH</span>
+                                <span class="text-xs font-mono text-vividPurple border border-vividPurple/20 px-2 py-1 rounded bg-vividPurple/5">FUTURE</span>
+                            </div>
+                            <!-- Botões de Compartilhamento (Visual) -->
+                            <div class="flex gap-3">
+                                <button class="text-gray-400 hover:text-white transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></button>
+                                <button class="text-gray-400 hover:text-white transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SEÇÃO DE COMENTÁRIOS -->
+                <div class="mt-8 glass-article rounded-2xl p-6 md:p-10 relative">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        Discussão <span class="text-sm font-normal text-gray-500 bg-white/5 px-2 py-1 rounded-full" id="commentCount">2</span>
+                    </h3>
+
+                    <!-- Formulário -->
+                    <div class="mb-10 bg-white/5 p-6 rounded-xl border border-white/5">
+                        <p class="text-sm text-gray-400 mb-4">Deixe sua opinião (Apenas texto e emojis permitidos 🤖)</p>
+                        
+                        <!-- Avaliação Estrelas -->
+                        <div class="flex items-center gap-1 mb-4" id="starRatingSelector">
+                            <span class="text-sm text-gray-300 mr-2">Sua avaliação:</span>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="1"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="2"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="3"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="4"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="5"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                        </div>
+
+                        <textarea id="commentInput" rows="3" class="w-full bg-midnight/50 border border-white/10 rounded-lg p-3 text-white placeholder-gray-500 focus:outline-none focus:border-electricBlue transition-colors resize-none" placeholder="Escreva seu comentário..."></textarea>
+                        
+                        <div id="errorMsg" class="hidden text-danger text-xs mt-2 flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            Links e imagens não são permitidos. Apenas texto e emojis.
+                        </div>
+
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-xs text-gray-500">Logado como Visitante</span>
+                            <button id="postCommentBtn" class="bg-gradient-to-r from-electricBlue to-vividPurple text-white px-6 py-2 rounded-full font-medium hover:opacity-90 transition-opacity disabled:opacity-50">
+                                Publicar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Comentários -->
+                    <div id="commentsList" class="space-y-6">
+                        
+                        <!-- Comentário 1 (Exemplo) -->
+                        <div class="flex gap-4 animate-fade-in">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ana" class="w-10 h-10 rounded-full border border-white/10 bg-midnight">
+                            <div class="flex-1">
+                                <div class="bg-white/5 rounded-2xl p-4 rounded-tl-none border border-white/5">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <span class="text-white font-semibold text-sm">Ana Clara</span>
+                                            <span class="text-gray-500 text-xs ml-2">Há 2 horas</span>
+                                        </div>
+                                        <div class="flex text-yellow-400">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-coolgrey text-sm">Excelente artigo! Realmente, estou sentindo essa mudança no e-commerce. A integração via API já é uma realidade para nós.</p>
+                                </div>
+                                <div class="flex gap-4 mt-2 ml-2">
+                                    <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                        <span>12</span>
+                                    </button>
+                                    <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-danger transition-colors" onclick="toggleDislike(this)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                    </button>
+                                    <button class="text-xs text-gray-500 hover:text-electricBlue transition-colors">Responder</button>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Comentário 2 (Com resposta) -->
+                         <div class="flex gap-4 animate-fade-in">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" class="w-10 h-10 rounded-full border border-white/10 bg-midnight">
+                            <div class="flex-1">
+                                <div class="bg-white/5 rounded-2xl p-4 rounded-tl-none border border-white/5">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <span class="text-white font-semibold text-sm">João Pedro</span>
+                                            <span class="text-gray-500 text-xs ml-2">Há 45 min</span>
+                                        </div>
+                                        <div class="flex text-yellow-400">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3 h-3 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-3 h-3 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-coolgrey text-sm">Discordo um pouco. Acredito que o fator humano (branding) ainda vai pesar muito.</p>
+                                </div>
+                                <div class="flex gap-4 mt-2 ml-2">
+                                    <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                        <span>3</span>
+                                    </button>
+                                    <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-danger transition-colors" onclick="toggleDislike(this)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                    </button>
+                                    <button class="text-xs text-gray-500 hover:text-electricBlue transition-colors">Responder</button>
+                                </div>
+                                
+                                <!-- Resposta -->
+                                <div class="flex gap-3 mt-4 ml-4 border-l-2 border-white/5 pl-4">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="w-8 h-8 rounded-full border border-electricBlue">
+                                    <div class="flex-1">
+                                         <div class="bg-electricBlue/10 border border-electricBlue/20 rounded-2xl p-3 rounded-tl-none">
+                                             <span class="text-electricBlue font-bold text-xs">Lucas Mendes (Autor)</span>
+                                             <p class="text-coolgrey text-sm mt-1">Concordo, João! O branding será o "critério de desempate" dos algoritmos.</p>
+                                         </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </article>
+
+            <!-- SIDEBAR (Direita - 4 Colunas) -->
+            <aside class="lg:col-span-4 space-y-8">
+                
+                <!-- AD SPACE (SIDEBAR) -->
+                <div class="ad-space w-full h-[300px] rounded-lg">
+                    Espaço Publicitário Vertical
+                </div>
+
+                <!-- Widget: Artigos Relacionados -->
+                <div class="glass-article rounded-2xl p-6">
+                    <h3 class="text-white font-semibold mb-4 border-l-4 border-electricBlue pl-3">Leia Também</h3>
+                    <div class="space-y-4">
+                        <a href="#" class="block group">
+                            <h4 class="text-coolgrey group-hover:text-electricBlue transition-colors text-sm font-medium mb-1">Como treinar LLMs com dados proprietários</h4>
+                            <span class="text-xs text-gray-500">Há 2 dias • Tech</span>
+                        </a>
+                        <hr class="border-white/5">
+                        <a href="#" class="block group">
+                            <h4 class="text-coolgrey group-hover:text-electricBlue transition-colors text-sm font-medium mb-1">O fim dos Cookies de terceiros: O que muda?</h4>
+                            <span class="text-xs text-gray-500">Há 5 dias • Marketing</span>
+                        </a>
+                        <hr class="border-white/5">
+                        <a href="#" class="block group">
+                            <h4 class="text-coolgrey group-hover:text-electricBlue transition-colors text-sm font-medium mb-1">Automação de processos criativos com MidJourney</h4>
+                            <span class="text-xs text-gray-500">Semana passada • Design</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Widget: Newsletter -->
+                <div class="rounded-2xl p-6 bg-gradient-to-br from-electricBlue/20 to-vividPurple/20 border border-white/10">
+                    <h3 class="text-white font-bold mb-2">Não perca o futuro</h3>
+                    <p class="text-sm text-gray-300 mb-4">Receba análises profundas como esta direto no seu e-mail.</p>
+                    <input type="email" placeholder="Seu melhor e-mail" class="w-full bg-midnight/50 border border-white/10 rounded-md p-2 text-sm text-white mb-2 focus:border-electricBlue outline-none">
+                    <button class="w-full bg-white text-midnight font-bold py-2 rounded-md hover:bg-gray-200 transition-colors text-sm">Inscrever-se</button>
+                </div>
+
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- FOOTER (Simples) -->
+    <footer class="glass-header mt-auto py-8 text-center text-sm text-coolgrey/50 border-t border-white/5">
+        <p>COGITARI © 2025. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- SCRIPT DE COMENTÁRIOS E INTERAÇÃO -->
+    <script>
+        // Lógica de Estrelas
+        let selectedRating = 0;
+        const starBtns = document.querySelectorAll('.star-btn');
+        
+        starBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const value = parseInt(btn.dataset.value);
+                selectedRating = value;
+                updateStars(value);
+            });
+        });
+
+        function updateStars(value) {
+            starBtns.forEach(btn => {
+                const btnVal = parseInt(btn.dataset.value);
+                if (btnVal <= value) {
+                    btn.classList.add('text-yellow-400');
+                    btn.classList.remove('text-gray-600');
+                } else {
+                    btn.classList.remove('text-yellow-400');
+                    btn.classList.add('text-gray-600');
+                }
+            });
+        }
+
+        // Lógica de Postagem
+        const commentInput = document.getElementById('commentInput');
+        const postBtn = document.getElementById('postCommentBtn');
+        const commentsList = document.getElementById('commentsList');
+        const errorMsg = document.getElementById('errorMsg');
+        const commentCount = document.getElementById('commentCount');
+
+        postBtn.addEventListener('click', () => {
+            const text = commentInput.value.trim();
+            
+            // Validação: Proibir Links e Tags HTML
+            // Regex procura por http, https, www, .com, ou tags html <...>
+            const forbiddenPattern = /(https?:\/\/|www\.|[a-zA-Z0-9]+\.[a-zA-Z]{2,}|<[^>]*>)/i;
+
+            if (text === "") return;
+
+            if (forbiddenPattern.test(text)) {
+                errorMsg.classList.remove('hidden');
+                commentInput.classList.add('border-danger');
+                return;
+            } else {
+                errorMsg.classList.add('hidden');
+                commentInput.classList.remove('border-danger');
+            }
+
+            // Criação do HTML do Comentário
+            const newComment = document.createElement('div');
+            newComment.className = 'flex gap-4 animate-fade-in';
+            
+            // Gerar estrelas para o comentário
+            let starsHtml = '';
+            for(let i=1; i<=5; i++) {
+                let colorClass = i <= selectedRating ? 'text-yellow-400' : 'text-gray-600';
+                starsHtml += `<svg class="w-3 h-3 ${colorClass}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+            }
+
+            newComment.innerHTML = `
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${Math.random()}" class="w-10 h-10 rounded-full border border-white/10 bg-midnight">
+                <div class="flex-1">
+                    <div class="bg-white/5 rounded-2xl p-4 rounded-tl-none border border-white/5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <span class="text-white font-semibold text-sm">Visitante</span>
+                                <span class="text-gray-500 text-xs ml-2">Agora mesmo</span>
+                            </div>
+                            <div class="flex">
+                                ${starsHtml}
+                            </div>
+                        </div>
+                        <p class="text-coolgrey text-sm">${text}</p>
+                    </div>
+                    <div class="flex gap-4 mt-2 ml-2">
+                        <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                            <span>0</span>
+                        </button>
+                        <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-danger transition-colors" onclick="toggleDislike(this)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            commentsList.prepend(newComment);
+            commentInput.value = '';
+            
+            // Atualiza contador
+            const currentCount = parseInt(commentCount.innerText);
+            commentCount.innerText = currentCount + 1;
+            
+            // Resetar estrelas
+            selectedRating = 0;
+            updateStars(0);
+        });
+
+        // Funções de Like/Dislike (Mock Visual)
+        function toggleLike(btn) {
+            const countSpan = btn.querySelector('span');
+            let count = parseInt(countSpan.innerText);
+            
+            if (btn.classList.contains('text-electricBlue')) {
+                btn.classList.remove('text-electricBlue');
+                btn.classList.add('text-gray-500');
+                countSpan.innerText = count - 1;
+            } else {
+                btn.classList.add('text-electricBlue');
+                btn.classList.remove('text-gray-500');
+                countSpan.innerText = count + 1;
+                
+                // Reseta dislike se estiver ativo
+                const dislikeBtn = btn.nextElementSibling;
+                if(dislikeBtn.classList.contains('text-danger')) {
+                    dislikeBtn.classList.remove('text-danger');
+                    dislikeBtn.classList.add('text-gray-500');
+                }
+            }
+        }
+
+        function toggleDislike(btn) {
+            if (btn.classList.contains('text-danger')) {
+                btn.classList.remove('text-danger');
+                btn.classList.add('text-gray-500');
+            } else {
+                btn.classList.add('text-danger');
+                btn.classList.remove('text-gray-500');
+                
+                // Reseta like se estiver ativo
+                const likeBtn = btn.previousElementSibling;
+                const countSpan = likeBtn.querySelector('span');
+                if(likeBtn.classList.contains('text-electricBlue')) {
+                    likeBtn.classList.remove('text-electricBlue');
+                    likeBtn.classList.add('text-gray-500');
+                    countSpan.innerText = parseInt(countSpan.innerText) - 1;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

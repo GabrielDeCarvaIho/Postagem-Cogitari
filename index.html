@@ -44,7 +44,7 @@
                         },
                         slideDown: {
                             '0%': { opacity: '0', transform: 'translateY(-10px)', maxHeight: '0' },
-                            '100%': { opacity: '1', transform: 'translateY(0)', maxHeight: '200px' },
+                            '100%': { opacity: '1', transform: 'translateY(0)', maxHeight: '500px' },
                         }
                     }
                 }
@@ -62,7 +62,7 @@
 
         /* Container do Artigo: Mais opaco para leitura confortável */
         .glass-article {
-            background: rgba(5, 10, 37, 0.85); /* 85% opacidade para bloquear o fundo */
+            background: rgba(5, 10, 37, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -73,6 +73,13 @@
             background: rgba(5, 10, 37, 0.6);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-modal {
+            background: rgba(5, 10, 37, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         .gradient-text {
@@ -110,36 +117,38 @@
         /* Tipografia do Artigo */
         .article-content h2 {
             color: white;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
         }
         .article-content p {
             color: #E2E8F0;
-            font-size: 1.125rem;
+            font-size: 1.25rem; /* Fonte levemente maior para preencher o espaço */
             line-height: 1.8;
-            margin-bottom: 1.5rem;
-            text-align: justify; /* Alinhamento justificado para simetria do bloco de texto */
+            margin-bottom: 2rem;
+            text-align: justify;
         }
         .article-content blockquote {
             border-left: 4px solid #7B42F6;
-            padding-left: 1.5rem;
+            padding-left: 2rem;
             font-style: italic;
             color: #94A3B8;
-            margin: 2rem 0;
+            margin: 3rem 0;
             background: rgba(255,255,255,0.02);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
+            padding: 2rem;
+            border-radius: 0 12px 12px 0;
+            font-size: 1.2rem;
         }
         .article-content ul {
             list-style-type: disc;
-            padding-left: 1.5rem;
-            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
             color: #E2E8F0;
+            font-size: 1.2rem;
         }
         .article-content li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
         
         /* Reply Form Animation */
@@ -154,31 +163,42 @@
 </head>
 <body class="bg-midnight text-coolgrey font-sans overflow-x-hidden min-h-screen relative selection:bg-electricBlue selection:text-white">
 
-    <!-- BACKGROUND ORBS (Centralizados para simetria) -->
+    <!-- BACKGROUND ORBS -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-electricBlue rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-blob"></div>
-        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-vividPurple rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-blob animation-delay-2000"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-electricBlue rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-blob"></div>
+        <div class="absolute bottom-0 right-0 w-[800px] h-[800px] bg-vividPurple rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-blob animation-delay-2000"></div>
     </div>
 
     <!-- HEADER (Sticky & Glass) -->
     <nav class="fixed w-full z-50 glass-header top-0 left-0 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-8">
-                    <a href="index.html" class="flex-shrink-0">
+                <div class="flex items-center gap-4">
+                    <a href="index.html" class="flex-shrink-0 flex items-center gap-3">
+                        <!-- LOGO INSERIDA AQUI -->
+                        <img src="COGITARI LOGO w.png" alt="Logo COGITARI" class="h-10 w-auto object-contain">
                         <span class="text-2xl font-bold tracking-wider gradient-text cursor-pointer hover:opacity-80 transition-opacity">COGITARI</span>
                     </a>
+                    
                     <!-- Breadcrumbs Desktop -->
-                    <div class="hidden md:flex items-center text-sm text-gray-500 space-x-2">
-                        <span class="text-gray-600">/</span>
+                    <div class="hidden lg:flex items-center text-sm text-gray-500 space-x-2 ml-6 border-l border-white/10 pl-6 h-8">
                         <a href="#" class="hover:text-white transition-colors">Notícias</a>
                         <span class="text-gray-600">/</span>
                         <a href="#" class="hover:text-white transition-colors">Automação</a>
                     </div>
                 </div>
                 
-                <!-- Botão Voltar -->
-                <div>
+                <!-- Botões de Ação Header -->
+                <div class="flex items-center gap-4">
+                    <!-- Botão Login Simulado -->
+                    <button id="loginBtn" onclick="toggleLogin()" class="hidden md:block text-sm font-medium text-coolgrey hover:text-white transition-colors">
+                        Entrar
+                    </button>
+                    <div id="userProfile" class="hidden flex items-center gap-2">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" class="w-8 h-8 rounded-full border border-electricBlue">
+                        <span class="text-sm font-medium text-white">Usuário</span>
+                    </div>
+
                     <a href="#" onclick="history.back()" class="flex items-center gap-2 text-sm font-medium text-coolgrey hover:text-white transition-colors border border-white/10 hover:border-white/30 px-4 py-2 rounded-full glass-card-light">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                         Voltar
@@ -188,21 +208,21 @@
         </div>
     </nav>
 
-    <!-- CONTAINER PRINCIPAL (Centralizado e Simétrico) -->
-    <main class="relative z-10 pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto flex flex-col items-center">
+    <!-- CONTAINER PRINCIPAL (Expandido para preencher laterais) -->
+    <main class="relative z-10 pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto flex flex-col items-center">
         
-        <!-- AD SPACE 1 (TOPO - BANNER LARGO) -->
-        <div class="ad-space h-32 mb-10 w-full max-w-4xl mx-auto">
-            Publicidade Topo (970x90 ou 728x90)
+        <!-- AD SPACE 1 (TOPO - LARGURA TOTAL) -->
+        <div class="ad-space h-32 mb-10 w-full">
+            Publicidade Topo (Leaderboard)
         </div>
 
-        <!-- ARTIGO CENTRALIZADO -->
-        <article class="w-full max-w-4xl mx-auto">
+        <!-- ARTIGO (LARGURA EXPANDIDA) -->
+        <article class="w-full">
             
             <!-- Card Principal do Artigo -->
-            <div class="glass-article rounded-2xl p-8 md:p-12 lg:p-14 overflow-hidden relative shadow-2xl">
+            <div class="glass-article rounded-2xl p-8 md:p-16 overflow-hidden relative shadow-2xl">
                 
-                <!-- Meta Header Centralizado -->
+                <!-- Meta Header -->
                 <div class="flex flex-wrap items-center justify-center gap-4 mb-8 text-sm border-b border-white/5 pb-6">
                     <span class="bg-electricBlue/10 text-electricBlue border border-electricBlue/20 px-4 py-1.5 rounded-full font-medium tracking-wide">IA & Marketing</span>
                     <span class="text-gray-400 flex items-center gap-2">
@@ -215,41 +235,41 @@
                     </span>
                 </div>
 
-                <!-- Título H1 Centralizado -->
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight text-center tracking-tight">
+                <!-- Título H1 Expandido -->
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-10 leading-tight text-center tracking-tight max-w-6xl mx-auto">
                     O Fim do "Click": Agentes Autônomos e o Novo Marketing
                 </h1>
 
                 <!-- Imagem de Destaque -->
-                <div class="relative w-full h-[450px] mb-12 rounded-xl overflow-hidden group border border-white/5 shadow-lg">
+                <div class="relative w-full h-[550px] mb-12 rounded-xl overflow-hidden group border border-white/5 shadow-lg">
                     <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2000&auto=format&fit=crop" 
                          alt="Agentes de IA" 
                          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-midnight/60 to-transparent"></div>
-                    <div class="absolute bottom-4 right-4 flex items-center gap-2 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10">
-                        <span class="text-xs text-gray-300">Foto: Unsplash AI</span>
+                    <div class="absolute bottom-6 right-6 flex items-center gap-2 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                        <span class="text-sm text-gray-300">Foto: Unsplash AI</span>
                     </div>
                 </div>
 
-                <!-- Autor e Intro (Layout Flex Simétrico) -->
-                <div class="flex items-center justify-between mb-10 px-4">
-                    <div class="flex items-center gap-4">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Autor" class="w-14 h-14 rounded-full border-2 border-electricBlue p-0.5 bg-midnight">
+                <!-- Autor e Intro -->
+                <div class="flex items-center justify-between mb-12 px-4 max-w-6xl mx-auto border-b border-white/5 pb-8">
+                    <div class="flex items-center gap-5">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Autor" class="w-16 h-16 rounded-full border-2 border-electricBlue p-0.5 bg-midnight">
                         <div>
-                            <p class="text-white font-bold text-lg">Lucas Mendes</p>
-                            <p class="text-coolgrey/60 text-sm">Editor Chefe</p>
+                            <p class="text-white font-bold text-xl">Lucas Mendes</p>
+                            <p class="text-coolgrey/60 text-base">Editor Chefe</p>
                         </div>
                     </div>
-                    <div class="flex gap-2">
-                        <button class="text-gray-400 hover:text-white transition p-2 rounded-full hover:bg-white/5"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></button>
-                        <button class="text-gray-400 hover:text-white transition p-2 rounded-full hover:bg-white/5"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></button>
-                        <button class="text-gray-400 hover:text-white transition p-2 rounded-full hover:bg-white/5"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg></button>
+                    <div class="flex gap-3">
+                        <button onclick="shareAction()" class="text-gray-400 hover:text-white transition p-3 rounded-full hover:bg-white/5"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></button>
+                        <button onclick="shareAction()" class="text-gray-400 hover:text-white transition p-3 rounded-full hover:bg-white/5"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></button>
+                        <button onclick="shareAction()" class="text-gray-400 hover:text-white transition p-3 rounded-full hover:bg-white/5"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg></button>
                     </div>
                 </div>
 
-                <!-- Conteúdo do Texto -->
-                <div class="article-content text-coolgrey px-2 md:px-6">
-                    <p class="first-letter:text-6xl first-letter:font-bold first-letter:text-electricBlue first-letter:float-left first-letter:mr-4 first-letter:mt-[-8px] first-letter:leading-none">
+                <!-- Conteúdo do Texto (Max Width Controlado para legibilidade, mas expandido) -->
+                <div class="article-content text-coolgrey px-2 md:px-0 max-w-6xl mx-auto">
+                    <p class="first-letter:text-7xl first-letter:font-bold first-letter:text-electricBlue first-letter:float-left first-letter:mr-6 first-letter:mt-[-8px] first-letter:leading-none">
                         A era do usuário navegando manualmente por dezenas de sites está chegando ao fim. Com a ascensão dos Agentes Autônomos de IA (AutoGPT, BabyAGI), o marketing digital enfrenta sua maior revolução desde o surgimento do SEO.
                     </p>
                     
@@ -258,9 +278,9 @@
                     </p>
 
                     <!-- AD SPACE 2 (IN-ARTICLE 1) -->
-                    <div class="my-10">
-                        <div class="ad-space h-60">
-                            Publicidade Contextual (Parceiro)
+                    <div class="my-12">
+                        <div class="ad-space h-72">
+                            Publicidade Contextual Grande (Parceiro)
                         </div>
                         <p class="text-[10px] text-center text-gray-600 mt-2 uppercase tracking-widest">Patrocinado</p>
                     </div>
@@ -282,12 +302,12 @@
                         <li><strong>Reputação Verificável:</strong> Reviews falsos serão filtrados por algoritmos avançados. A autenticidade vale ouro.</li>
                     </ul>
 
-                    <!-- AD SPACE 3 (IN-ARTICLE 2) -->
-                    <div class="my-10 flex gap-4">
-                        <div class="ad-space h-40 w-1/2">
+                    <!-- AD SPACE 3 (IN-ARTICLE 2 - Split) -->
+                    <div class="my-12 flex gap-6">
+                        <div class="ad-space h-60 w-1/2">
                             Ad Bloco A
                         </div>
-                        <div class="ad-space h-40 w-1/2">
+                        <div class="ad-space h-60 w-1/2">
                             Ad Bloco B
                         </div>
                     </div>
@@ -298,7 +318,7 @@
                 </div>
 
                 <!-- Rodapé do Artigo -->
-                <div class="mt-14 pt-10 border-t border-white/5 text-center">
+                <div class="mt-20 pt-10 border-t border-white/5 text-center max-w-6xl mx-auto">
                     <h3 class="text-white text-sm font-semibold mb-6 uppercase tracking-wider">Fontes & Referências</h3>
                     <ul class="text-sm text-gray-500 space-y-2 mb-8 inline-block text-left">
                         <li>1. OpenAI Research Paper: "Language Models as Agents" (2024)</li>
@@ -310,55 +330,55 @@
             </div>
 
             <!-- AD SPACE 4 (FIM DO ARTIGO) -->
-            <div class="ad-space h-32 mt-10 mb-10 w-full">
+            <div class="ad-space h-40 mt-12 mb-12 w-full">
                 Publicidade Rodapé Artigo
             </div>
 
         </article>
 
-        <!-- SEÇÃO "LEIA TAMBÉM" E NEWSLETTER (Organização Simétrica em Grid) -->
-        <section class="w-full max-w-4xl mt-4 mb-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- SEÇÃO "LEIA TAMBÉM" E NEWSLETTER -->
+        <section class="w-full mt-4 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
                 <!-- Coluna Esquerda: Artigos Relacionados -->
-                <div class="glass-panel rounded-2xl p-8 flex flex-col justify-center h-full">
-                    <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
-                        <span class="w-1 h-6 bg-electricBlue rounded-full"></span>
+                <div class="glass-panel rounded-2xl p-10 flex flex-col justify-center h-full">
+                    <h3 class="text-white font-bold text-xl mb-8 flex items-center gap-3">
+                        <span class="w-1.5 h-8 bg-electricBlue rounded-full"></span>
                         Relacionados
                     </h3>
-                    <div class="space-y-6">
-                        <a href="#" class="flex items-start gap-4 group">
-                            <div class="w-16 h-16 rounded-lg bg-white/5 flex-shrink-0 overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="space-y-8">
+                        <a href="#" class="flex items-start gap-6 group">
+                            <div class="w-24 h-24 rounded-lg bg-white/5 flex-shrink-0 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                             </div>
-                            <div>
-                                <h4 class="text-coolgrey group-hover:text-electricBlue transition-colors font-medium leading-tight mb-1">Como treinar LLMs com dados proprietários</h4>
-                                <span class="text-xs text-gray-500">Tech • 2 min</span>
+                            <div class="flex-1">
+                                <h4 class="text-coolgrey group-hover:text-electricBlue transition-colors font-medium text-lg leading-tight mb-2">Como treinar LLMs com dados proprietários</h4>
+                                <span class="text-sm text-gray-500">Tech • 2 min leitura</span>
                             </div>
                         </a>
                         <hr class="border-white/5">
-                        <a href="#" class="flex items-start gap-4 group">
-                            <div class="w-16 h-16 rounded-lg bg-white/5 flex-shrink-0 overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <a href="#" class="flex items-start gap-6 group">
+                            <div class="w-24 h-24 rounded-lg bg-white/5 flex-shrink-0 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                             </div>
-                            <div>
-                                <h4 class="text-coolgrey group-hover:text-electricBlue transition-colors font-medium leading-tight mb-1">O fim dos Cookies de terceiros</h4>
-                                <span class="text-xs text-gray-500">Marketing • 4 min</span>
+                            <div class="flex-1">
+                                <h4 class="text-coolgrey group-hover:text-electricBlue transition-colors font-medium text-lg leading-tight mb-2">O fim dos Cookies de terceiros</h4>
+                                <span class="text-sm text-gray-500">Marketing • 4 min leitura</span>
                             </div>
                         </a>
                     </div>
                 </div>
 
                 <!-- Coluna Direita: Newsletter -->
-                <div class="rounded-2xl p-8 bg-gradient-to-br from-electricBlue/10 to-vividPurple/10 border border-white/10 flex flex-col justify-center h-full relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-vividPurple/20 blur-3xl rounded-full -mr-10 -mt-10"></div>
+                <div class="rounded-2xl p-10 bg-gradient-to-br from-electricBlue/10 to-vividPurple/10 border border-white/10 flex flex-col justify-center h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-vividPurple/20 blur-3xl rounded-full -mr-16 -mt-16"></div>
                     
-                    <h3 class="text-white font-bold text-xl mb-2 relative z-10">Fique à frente</h3>
-                    <p class="text-sm text-gray-300 mb-6 relative z-10">Receba o resumo semanal da COGITARI. Sem spam, apenas inteligência.</p>
+                    <h3 class="text-white font-bold text-2xl mb-4 relative z-10">Fique à frente</h3>
+                    <p class="text-base text-gray-300 mb-8 relative z-10">Receba o resumo semanal da COGITARI. Sem spam, apenas inteligência aplicada.</p>
                     
-                    <form class="relative z-10 space-y-3">
-                        <input type="email" placeholder="seu@email.com" class="w-full bg-midnight/60 border border-white/10 rounded-lg p-3 text-sm text-white focus:border-electricBlue outline-none backdrop-blur-sm transition-colors">
-                        <button class="w-full bg-white hover:bg-coolgrey text-midnight font-bold py-3 rounded-lg transition-colors text-sm uppercase tracking-wide">
+                    <form class="relative z-10 space-y-4">
+                        <input type="email" placeholder="seu@email.com" class="w-full bg-midnight/60 border border-white/10 rounded-lg p-4 text-base text-white focus:border-electricBlue outline-none backdrop-blur-sm transition-colors">
+                        <button class="w-full bg-white hover:bg-coolgrey text-midnight font-bold py-4 rounded-lg transition-colors text-sm uppercase tracking-wide">
                             Inscrever-se Gratuitamente
                         </button>
                     </form>
@@ -368,37 +388,39 @@
         </section>
 
         <!-- SEÇÃO DE COMENTÁRIOS -->
-        <section class="w-full max-w-4xl">
-            <div class="glass-article rounded-2xl p-8 md:p-12 relative">
-                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                    Discussão <span class="text-sm font-bold text-midnight bg-white px-2.5 py-0.5 rounded-md" id="commentCount">2</span>
+        <section class="w-full">
+            <div class="glass-article rounded-2xl p-8 md:p-16 relative">
+                <h3 class="text-3xl font-bold text-white mb-10 flex items-center gap-4">
+                    Discussão <span class="text-lg font-bold text-midnight bg-white px-3 py-1 rounded-md" id="commentCount">2</span>
                 </h3>
 
                 <!-- Formulário Principal -->
-                <div class="mb-12 bg-white/5 p-6 rounded-2xl border border-white/5">
-                    <div class="flex items-center gap-1 mb-4" id="starRatingSelector">
-                        <span class="text-xs uppercase tracking-wider text-gray-400 mr-2 font-semibold">Avaliar Artigo:</span>
-                        <!-- Estrelas (Mantido código anterior) -->
-                        <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="1"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
-                        <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="2"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
-                        <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="3"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
-                        <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="4"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
-                        <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors" data-value="5"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                <div class="mb-14 bg-white/5 p-8 rounded-2xl border border-white/5">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                        <div class="flex items-center gap-2 mb-4 md:mb-0" id="starRatingSelector">
+                            <span class="text-sm uppercase tracking-wider text-gray-400 mr-3 font-semibold">Avaliar:</span>
+                            <!-- Estrelas -->
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors p-1" data-value="1"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors p-1" data-value="2"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors p-1" data-value="3"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors p-1" data-value="4"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                            <button class="star-btn text-gray-600 hover:text-yellow-400 transition-colors p-1" data-value="5"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></button>
+                        </div>
+                        <div class="text-xs text-gray-500 flex items-center gap-2">
+                             Logado como: <span class="text-white font-medium" id="currentUserDisplay">Visitante (Restrito)</span>
+                        </div>
                     </div>
 
-                    <textarea id="commentInput" rows="3" class="w-full bg-midnight/50 border border-white/10 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-electricBlue transition-colors resize-none text-sm" placeholder="O que você pensa sobre isso?"></textarea>
+                    <textarea id="commentInput" rows="3" class="w-full bg-midnight/50 border border-white/10 rounded-xl p-5 text-white placeholder-gray-500 focus:outline-none focus:border-electricBlue transition-colors resize-none text-base" placeholder="O que você pensa sobre isso?"></textarea>
                     
-                    <div id="errorMsg" class="hidden text-danger text-xs mt-3 flex items-center gap-2 bg-danger/10 p-2 rounded-lg border border-danger/20">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <div id="errorMsg" class="hidden text-danger text-sm mt-3 flex items-center gap-2 bg-danger/10 p-3 rounded-lg border border-danger/20">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                         <span>Links e imagens não são permitidos. Apenas texto e emojis.</span>
                     </div>
 
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-xs text-gray-500 flex items-center gap-1">
-                            <span class="w-2 h-2 bg-success rounded-full"></span> Visitante
-                        </span>
-                        <button id="postCommentBtn" class="bg-gradient-to-r from-electricBlue to-vividPurple text-white px-8 py-2.5 rounded-full font-bold text-sm hover:shadow-lg hover:shadow-electricBlue/20 transition-all disabled:opacity-50">
-                            Publicar
+                    <div class="mt-6 flex justify-end">
+                        <button id="postCommentBtn" class="bg-gradient-to-r from-electricBlue to-vividPurple text-white px-10 py-3 rounded-full font-bold text-base hover:shadow-lg hover:shadow-electricBlue/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                            Publicar Comentário
                         </button>
                     </div>
                 </div>
@@ -407,11 +429,11 @@
                 <div id="commentsList" class="space-y-8">
                     
                     <!-- Comentário 1 -->
-                    <div class="comment-block group">
+                    <div class="comment-block group" id="comment-1">
                         <div class="flex gap-4">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ana" class="w-10 h-10 rounded-full border border-white/10 bg-midnight shrink-0">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ana" class="w-12 h-12 rounded-full border border-white/10 bg-midnight shrink-0">
                             <div class="flex-1">
-                                <div class="bg-white/5 rounded-2xl p-5 rounded-tl-none border border-white/5 hover:border-white/10 transition-colors">
+                                <div class="bg-white/5 rounded-2xl p-6 rounded-tl-none border border-white/5 hover:border-white/10 transition-colors">
                                     <div class="flex justify-between items-start mb-2">
                                         <div class="flex items-center gap-2">
                                             <span class="text-white font-bold text-sm">Ana Clara</span>
@@ -419,14 +441,14 @@
                                         </div>
                                         <div class="flex text-yellow-400 gap-0.5">
                                             <!-- 5 Estrelas -->
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                         </div>
                                     </div>
-                                    <p class="text-coolgrey text-sm leading-relaxed">Excelente artigo! Realmente, estou sentindo essa mudança no e-commerce. A integração via API já é uma realidade para nós.</p>
+                                    <p class="text-coolgrey text-base leading-relaxed">Excelente artigo! Realmente, estou sentindo essa mudança no e-commerce. A integração via API já é uma realidade para nós.</p>
                                 </div>
                                 <div class="flex gap-6 mt-3 ml-2">
                                     <button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
@@ -441,16 +463,17 @@
                                         Responder
                                     </button>
                                 </div>
+                                <div class="replies-wrapper mt-4"></div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Comentário 2 -->
-                    <div class="comment-block group">
+                    <div class="comment-block group" id="comment-2">
                         <div class="flex gap-4">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" class="w-10 h-10 rounded-full border border-white/10 bg-midnight shrink-0">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" class="w-12 h-12 rounded-full border border-white/10 bg-midnight shrink-0">
                             <div class="flex-1">
-                                <div class="bg-white/5 rounded-2xl p-5 rounded-tl-none border border-white/5 hover:border-white/10 transition-colors">
+                                <div class="bg-white/5 rounded-2xl p-6 rounded-tl-none border border-white/5 hover:border-white/10 transition-colors">
                                     <div class="flex justify-between items-start mb-2">
                                         <div class="flex items-center gap-2">
                                             <span class="text-white font-bold text-sm">João Pedro</span>
@@ -458,14 +481,14 @@
                                         </div>
                                         <div class="flex text-yellow-400 gap-0.5">
                                             <!-- Estrelas -->
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3 h-3 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3 h-3 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3 h-3 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                            <svg class="w-3 h-3 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4" text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            <svg class="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                         </div>
                                     </div>
-                                    <p class="text-coolgrey text-sm leading-relaxed">Discordo um pouco. Acredito que o fator humano (branding) ainda vai pesar muito.</p>
+                                    <p class="text-coolgrey text-base leading-relaxed">Discordo um pouco. Acredito que o fator humano (branding) ainda vai pesar muito.</p>
                                 </div>
                                 <div class="flex gap-6 mt-3 ml-2">
                                     <button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
@@ -481,18 +504,20 @@
                                     </button>
                                 </div>
 
-                                <!-- Resposta Aninhada -->
-                                <div class="mt-4 ml-6 pl-4 border-l border-white/10">
-                                    <div class="flex gap-3">
-                                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="w-8 h-8 rounded-full border border-electricBlue bg-midnight shrink-0">
-                                        <div class="flex-1">
-                                             <div class="bg-electricBlue/10 border border-electricBlue/20 rounded-2xl p-4 rounded-tl-none">
-                                                 <div class="flex items-center gap-2 mb-1">
-                                                     <span class="text-electricBlue font-bold text-xs">Lucas Mendes (Autor)</span>
-                                                     <span class="text-electricBlue/50 text-[10px]">• Há 30 min</span>
-                                                 </div>
-                                                 <p class="text-coolgrey text-sm">Concordo, João! O branding será o "critério de desempate" dos algoritmos.</p>
-                                             </div>
+                                <div class="replies-wrapper mt-4">
+                                    <!-- Resposta Aninhada Existente -->
+                                    <div class="ml-6 pl-4 border-l border-white/10 animate-fade-in">
+                                        <div class="flex gap-3">
+                                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="w-10 h-10 rounded-full border border-electricBlue bg-midnight shrink-0">
+                                            <div class="flex-1">
+                                                <div class="bg-electricBlue/10 border border-electricBlue/20 rounded-2xl p-4 rounded-tl-none">
+                                                    <div class="flex items-center gap-2 mb-1">
+                                                        <span class="text-electricBlue font-bold text-xs">Lucas Mendes (Autor)</span>
+                                                        <span class="text-electricBlue/50 text-[10px]">• Há 30 min</span>
+                                                    </div>
+                                                    <p class="text-coolgrey text-sm">Concordo, João! O branding será o "critério de desempate" dos algoritmos.</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -515,14 +540,75 @@
         </div>
     </footer>
 
+    <!-- MODAL DE LOGIN (Hidden by default) -->
+    <div id="loginModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center">
+        <div class="absolute inset-0 bg-midnight/80 backdrop-blur-sm" onclick="closeLoginModal()"></div>
+        <div class="glass-modal rounded-2xl p-8 w-full max-w-md relative z-10 animate-slide-down">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-electricBlue/20 rounded-full flex items-center justify-center mx-auto mb-4 text-electricBlue">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Login Necessário</h3>
+                <p class="text-gray-400 mb-6">Você precisa estar logado para interagir com a comunidade COGITARI.</p>
+                <button onclick="toggleLogin(); closeLoginModal()" class="w-full bg-gradient-to-r from-electricBlue to-vividPurple text-white py-3 rounded-lg font-bold hover:opacity-90 transition-opacity">
+                    Entrar com Google (Simulado)
+                </button>
+                <p class="text-xs text-gray-500 mt-4">Ao continuar, você aceita nossos termos.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- SCRIPT DE INTERATIVIDADE -->
     <script>
-        // Estrelas
+        // --- AUTH SIMULATION ---
+        let isLoggedIn = false;
+
+        function toggleLogin() {
+            isLoggedIn = !isLoggedIn;
+            const loginBtn = document.getElementById('loginBtn');
+            const userProfile = document.getElementById('userProfile');
+            const currentUserDisplay = document.getElementById('currentUserDisplay');
+            const postBtn = document.getElementById('postCommentBtn');
+            
+            if (isLoggedIn) {
+                loginBtn.innerText = "Sair";
+                userProfile.classList.remove('hidden');
+                loginBtn.classList.add('hidden'); // Hide login btn, show profile + logout if needed
+                loginBtn.classList.remove('hidden'); // Keep it visible for toggle demo
+                currentUserDisplay.innerText = "Usuário Verificado";
+                currentUserDisplay.classList.add('text-electricBlue');
+                postBtn.disabled = false;
+            } else {
+                loginBtn.innerText = "Entrar";
+                userProfile.classList.add('hidden');
+                currentUserDisplay.innerText = "Visitante (Restrito)";
+                currentUserDisplay.classList.remove('text-electricBlue');
+                postBtn.disabled = true;
+            }
+        }
+
+        function checkAuth() {
+            if (!isLoggedIn) {
+                document.getElementById('loginModal').classList.remove('hidden');
+                return false;
+            }
+            return true;
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        // --- ESTRELAS ---
         let selectedRating = 0;
         const starBtns = document.querySelectorAll('.star-btn');
         
         starBtns.forEach(btn => {
             btn.addEventListener('click', () => {
+                if(!checkAuth()) return;
                 const value = parseInt(btn.dataset.value);
                 selectedRating = value;
                 updateStars(value);
@@ -542,7 +628,7 @@
             });
         }
 
-        // Postar Comentário
+        // --- POSTAR COMENTÁRIO ---
         const commentInput = document.getElementById('commentInput');
         const postBtn = document.getElementById('postCommentBtn');
         const commentsList = document.getElementById('commentsList');
@@ -550,6 +636,8 @@
         const commentCount = document.getElementById('commentCount');
 
         postBtn.addEventListener('click', () => {
+            if(!checkAuth()) return; // Extra check
+
             const text = commentInput.value.trim();
             const forbiddenPattern = /(https?:\/\/|www\.|[a-zA-Z0-9]+\.[a-zA-Z]{2,}|<[^>]*>)/i;
 
@@ -570,22 +658,22 @@
             let starsHtml = '';
             for(let i=1; i<=5; i++) {
                 let colorClass = i <= selectedRating ? 'text-yellow-400' : 'text-gray-600';
-                starsHtml += `<svg class="w-3 h-3 ${colorClass}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+                starsHtml += `<svg class="w-4 h-4 ${colorClass}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
             }
 
             newComment.innerHTML = `
                 <div class="flex gap-4">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${Math.random()}" class="w-10 h-10 rounded-full border border-white/10 bg-midnight shrink-0">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${Math.random()}" class="w-12 h-12 rounded-full border border-white/10 bg-midnight shrink-0">
                     <div class="flex-1">
-                        <div class="bg-white/5 rounded-2xl p-5 rounded-tl-none border border-white/5">
+                        <div class="bg-white/5 rounded-2xl p-6 rounded-tl-none border border-white/5">
                             <div class="flex justify-between items-start mb-2">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-white font-bold text-sm">Visitante</span>
+                                    <span class="text-white font-bold text-sm">Usuário Verificado</span>
                                     <span class="text-gray-600 text-xs">• Agora mesmo</span>
                                 </div>
                                 <div class="flex">${starsHtml}</div>
                             </div>
-                            <p class="text-coolgrey text-sm">${text}</p>
+                            <p class="text-coolgrey text-base">${text}</p>
                         </div>
                         <div class="flex gap-6 mt-3 ml-2">
                             <button class="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-white transition-colors" onclick="toggleLike(this)">
@@ -600,6 +688,7 @@
                                 Responder
                             </button>
                         </div>
+                        <div class="replies-wrapper mt-4"></div>
                     </div>
                 </div>
             `;
@@ -614,8 +703,10 @@
             updateStars(0);
         });
 
-        // Like e Dislike
+        // --- LIKE / DISLIKE ---
         function toggleLike(btn) {
+            if(!checkAuth()) return;
+            
             const countSpan = btn.querySelector('span');
             let count = parseInt(countSpan.innerText);
             
@@ -637,6 +728,8 @@
         }
 
         function toggleDislike(btn) {
+            if(!checkAuth()) return;
+
             if (btn.classList.contains('text-danger')) {
                 btn.classList.remove('text-danger');
                 btn.classList.add('text-gray-500');
@@ -654,19 +747,19 @@
             }
         }
 
-        // Nova Função: Toggle Reply Form
+        // --- RESPOSTAS ---
         function toggleReplyForm(btn) {
-            // Encontra o container do comentário pai (flex-1)
+            if(!checkAuth()) return;
+
+            // Encontra o container flex-1
             const commentBody = btn.closest('.flex-1');
             
-            // Verifica se já existe um formulário de resposta aberto
+            // Verifica se já existe um formulário de resposta
             let existingForm = commentBody.querySelector('.reply-form-container');
 
             if (existingForm) {
-                // Se existe, toggle visibility
                 if (existingForm.classList.contains('hidden')) {
                     existingForm.classList.remove('hidden');
-                    // Pequeno delay para a animação funcionar (display:none não anima)
                     setTimeout(() => {
                         existingForm.style.maxHeight = '200px';
                         existingForm.style.opacity = '1';
@@ -680,13 +773,13 @@
                     }, 300);
                 }
             } else {
-                // Se não existe, cria
+                // Cria novo form, note o 'onclick="postReply(this)"'
                 const replyHtml = `
                     <div class="reply-form-container mt-4 ml-2 border-l border-white/10 pl-4 hidden" style="max-height: 0; opacity: 0;">
                         <textarea rows="2" class="w-full bg-midnight/50 border border-white/10 rounded-lg p-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-electricBlue transition-colors resize-none" placeholder="Escreva sua resposta..."></textarea>
                         <div class="flex justify-end mt-2 gap-2">
-                             <button class="text-xs text-gray-500 hover:text-white px-3 py-1" onclick="toggleReplyForm(this.parentElement.parentElement.previousElementSibling.lastElementChild)">Cancelar</button>
-                             <button class="bg-electricBlue/20 hover:bg-electricBlue/40 text-electricBlue text-xs px-4 py-1.5 rounded-full font-medium transition-colors">Responder</button>
+                             <button class="text-xs text-gray-500 hover:text-white px-3 py-1" onclick="toggleReplyForm(this.parentElement.parentElement.parentElement.parentElement.querySelector('button:nth-child(3)'))">Cancelar</button>
+                             <button onclick="postReply(this)" class="bg-electricBlue/20 hover:bg-electricBlue/40 text-electricBlue text-xs px-4 py-1.5 rounded-full font-medium transition-colors">Responder</button>
                         </div>
                     </div>
                 `;
@@ -694,7 +787,7 @@
                 const actionButtonsDiv = btn.parentElement;
                 actionButtonsDiv.insertAdjacentHTML('afterend', replyHtml);
                 
-                // Ativa (mostra) o novo form
+                // Ativa (mostra)
                 const newForm = commentBody.querySelector('.reply-form-container');
                 newForm.classList.remove('hidden');
                 setTimeout(() => {
@@ -703,6 +796,47 @@
                     newForm.querySelector('textarea').focus();
                 }, 10);
             }
+        }
+
+        function postReply(btn) {
+            // Pega o textarea irmão
+            const formContainer = btn.parentElement.parentElement;
+            const textarea = formContainer.querySelector('textarea');
+            const text = textarea.value.trim();
+            
+            if (text === "") return;
+
+            // Encontra o wrapper de respostas (dentro do comment body)
+            const commentBody = formContainer.parentElement; // flex-1
+            const repliesWrapper = commentBody.querySelector('.replies-wrapper');
+
+            // Cria HTML da resposta
+            const replyHtml = `
+                <div class="ml-6 pl-4 border-l border-white/10 animate-fade-in mt-4">
+                    <div class="flex gap-3">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${Math.random()}" class="w-10 h-10 rounded-full border border-white/10 bg-midnight shrink-0">
+                        <div class="flex-1">
+                            <div class="bg-white/5 rounded-2xl p-4 rounded-tl-none border border-white/5">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-white font-bold text-xs">Usuário Verificado</span>
+                                    <span class="text-gray-500 text-[10px]">• Agora mesmo</span>
+                                </div>
+                                <p class="text-coolgrey text-sm">${text}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            repliesWrapper.insertAdjacentHTML('beforeend', replyHtml);
+            
+            // Fecha e limpa o form
+            textarea.value = '';
+            formContainer.style.maxHeight = '0';
+            formContainer.style.opacity = '0';
+            setTimeout(() => {
+                formContainer.classList.add('hidden');
+            }, 300);
         }
     </script>
 </body>
